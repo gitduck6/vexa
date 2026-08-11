@@ -1,0 +1,84 @@
+--- RULES/POLICIES
+add_rules("mode.debug", "mode.release"); set_defaultmode("debug")
+add_rules("plugin.compile_commands.autoupdate")
+set_policy("build.progress_style", "multirow")
+-- add_rules("c++.unity_build")
+
+--- TOOLCHAIN
+toolchain(".gnu")
+    set_kind("standalone"); set_toolset("cxx", "g++")
+    set_toolset("as",    "as"); set_toolset("ar",    "ar")
+    set_toolset("ld",    "g++"); set_toolset("sh",    "g++")
+    set_toolset("ex",    "g++"); set_toolset("strip", "strip")
+toolchain_end()
+
+toolchain(".llvm")
+    set_kind("standalone"); set_toolset("cxx", "clang++");
+    set_toolset("as",    "clang"); set_toolset("ar",    "llvm-ar")
+    set_toolset("ld",    "clang++"); set_toolset("sh",    "clang++")
+    set_toolset("ex",    "clang++"); set_toolset("strip", "llvm-strip")
+toolchain_end()
+
+set_toolchains(".llvm")
+
+
+--- SCRIPT-BEGIN
+    flags = {"-Wall"}
+
+    if is_mode("debug") then
+        set_optimize("none")
+        set_symbols("debug")
+        set_strip("none")
+        debug = true
+        flags = {
+            "-Wall", "-Wextra",
+            "-fno-exceptions",
+--             "-Wno-unused-function"
+        };
+    elseif is_mode("release") then
+        set_optimize("fastest")
+        set_symbols("none")
+        set_strip("all")
+        debug = false
+        flags = {
+            "-Wall",
+            "-fno-exceptions",
+        };
+
+    end
+
+--- SCRIPT-END
+
+
+--- DEPENDENCIES
+add_requires("libsdl3", {system = true})
+
+--- GLOBAL
+set_languages("c++23")
+add_includedirs("include/")
+add_cxxflags(table.unpack(flags))
+add_ldflags("-flto=full")
+add_cxxflags("-stdlib=libc++")
+add_ldflags("-stdlib=libc++")
+
+--- TARGETS
+target("monako")
+    set_kind("object")
+    add_files("src/*.cpp")
+    add_packages("libsdl3")
+
+target("game")
+    add_files("tests/game.cpp")
+    add_deps("monako")
+
+target("main")
+    add_files("tests/main.cpp")
+    add_deps("monako")
+
+target("cstrlen")
+    add_files("tests/cstrlen.cpp")
+    add_deps("monako")
+
+target("entity")
+    add_files("tests/entity.cpp")
+    add_deps("monako")
