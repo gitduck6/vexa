@@ -1,4 +1,4 @@
-#include "../include/monako.hpp"
+#include "monako.hpp"
 #include "alt/SDL3.hpp"
 
 namespace mnk = monako;
@@ -10,26 +10,40 @@ auto main() -> int
     using monako::Renderer;
     using monako::ColorU8;
     using monako::Rect;
+    namespace log = monako::log;
     namespace time = monako::time;
     Engine::Init(Engine::VIDEO);
 
     Window::Cfg window_cfg = {};
     Renderer::Cfg renderer_cfg = {};
+    fp32 dt = 1000.f/60.f;
 
-    Window window = Window {window_cfg}
-        .setRenderer(renderer_cfg)
-        .setResizable()
-        .setPosition({100, 100})
-        .create()
-    ;
-    // window.setResizable();
+    auto tm_init = time::now();
+    Window window = Window {window_cfg};
+    auto tm_resize = time::now();
+    window.setResizable();
+    auto tm_size = time::now();
+    window.setSize({1280, 720});
+    auto tm_render = time::now();
+    window.setRenderer(renderer_cfg);
+    auto tm_create = time::now();
+    window = window.create();
+    auto tm_finish = time::now();
+
+    log::info("init: {}", (tm_resize - tm_init).nanos());
+    log::info("resize: {}", (tm_size - tm_resize).nanos());
+    log::info("size: {}", (tm_render - tm_size).nanos());
+    log::info("create: {}", (tm_create - tm_render).nanos());
+    log::info("finish: {}", (tm_finish - tm_create).nanos());
+
+
     auto& gfx = window.renderer();
-    window
-        .toggleMaximized().toggleMaximized().toggleMaximized()
-        .toggleMaximized().toggleMaximized().toggleMaximized();
+
 
     bool running = true;
     while (running) {
+        auto start = time::now();
+
         SDL_Event ev;
         while (SDL_PollEvent(&ev)) {
             switch (ev.type) {
@@ -41,23 +55,25 @@ auto main() -> int
                         case SDL_SCANCODE_ESCAPE: {
                             running = false; break;
                         }
+                        case SDL_SCANCODE_Q: {
+                            if (ev.key.mod == SDL_KMOD_LCTRL) running = false;
+
+                            break;
+                        }
                         default: {
-                            if ((ev.key.mod & SDL_KMOD_CTRL) && ev.key.key == SDLK_Q) {
-                                running = false; break;
-                            }
                         }
                     }
                 }
             }
         }
 
-        gfx.start();
-        gfx.clear(ColorU8::BLACK);
+
+        gfx.start(ColorU8::BLACK);
 
         gfx.rectFill({Rect{100, 100, 250, 250}}, ColorU8::CYAN);
 
         gfx.finish();
-        time::sleepMillis(16.6);
+        time::sleep(time::Millis(dt - start.elapsed().millis()));
     }
 
     Engine::Close();

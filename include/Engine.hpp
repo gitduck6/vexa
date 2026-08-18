@@ -12,10 +12,13 @@ public:
 
     static bool Init(Flags initial_subsystems) noexcept;
     static void Close() noexcept;
-
     static bool InitSubsystems(Flags subsystems) noexcept;
     static void CloseSubsystems(Flags subsystems) noexcept;
+
+    static bool CaptureMouse(bool yes) noexcept;
+    static bool IsMouseCaptured() noexcept;
 };
+
 
 
 NAMESPACE_END(monako)

@@ -1,4 +1,4 @@
-#include "../include/monako.hpp"
+#include "monako.hpp"
 
 namespace mnk = monako;
 
@@ -8,9 +8,9 @@ int main() {
     using Dur = mnk::time::Nanos;
     const char* dur_type = "";
     if constexpr (is_same_t<Dur, mnk::time::Nanos>) dur_type = "ns";
-    if constexpr (is_same_t<Dur, mnk::time::Micros>) dur_type = "micros";
-    if constexpr (is_same_t<Dur, mnk::time::Millis>) dur_type = "ms";
-    if constexpr (is_same_t<Dur, mnk::time::Seconds>) dur_type = "secs";
+    if constexpr (same_t<Dur, mnk::time::Micros>) dur_type = "micros";
+    if constexpr (same_t<Dur, mnk::time::Millis>) dur_type = "ms";
+    if constexpr (same_t<Dur, mnk::time::Seconds>) dur_type = "secs";
 
     mnk::log::print(cstr);
     auto start = mnk::time::now<Dur>();
@@ -18,7 +18,7 @@ int main() {
     auto finish = mnk::time::now<Dur>();
     mnk::log::print(cstr);
 
-    auto elapsed = finish.date.value - start.date.value;
+    auto elapsed = finish.m_date.m_value - start.m_date.m_value;
     mnk::log::print("\n\nelapsed-time: {}{}", elapsed, dur_type);
     mnk::log::print("lenght of c-string '{}' is: {}\n\n\n", cstr, sz);
 }

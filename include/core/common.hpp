@@ -23,23 +23,27 @@ inline consteval usize cstr_len(const char* cstr) {
 template<typename T>
 class ConfigValue {
     T m_default;
-public:
     T value;
+public:
 
     constexpr ConfigValue (T default_and_initial_value)
         : m_default(default_and_initial_value), value(m_default)
     {}
 
-    constexpr bool operator=(const T& new_value) {
+    constexpr ConfigValue& operator=(const T& new_value) {
         value = new_value;
         return *this;
     }
 
-    constexpr operator T() const { return value; }
-    constexpr T& operator-> () const { return value; }
+    // get default value of the config object
     const T& defaultVal() const { return m_default; }
-};
 
+    // to access @member value implicitly
+    constexpr operator T() const noexcept { return value; }
+
+    // to access underlying members of value via `->`
+    constexpr T* operator ->() noexcept { return &value; }
+};
 
 
 template<class T>

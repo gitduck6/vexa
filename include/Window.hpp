@@ -27,14 +27,13 @@ class [[nodiscard]] Window
         ConfigValue<bool> is_always_on_top;
         ConfigValue<bool> is_mouse_grabbed;
         ConfigValue<bool> is_mouse_relative;
-        ConfigValue<bool> is_mouse_captured;
         ConfigValue<bool> is_keyboard_grabbed;
 
     public:
         constexpr M_Cfg() noexcept:
             flags(Flags{}),
             title(""),
-            size(Vec2i{1280, 720}),
+            size(Vec2i{0, 0}),
             position(Vec2i{0, 0}),
             is_resizable(false),
             is_maximized(false),
@@ -45,18 +44,28 @@ class [[nodiscard]] Window
             is_always_on_top(false),
             is_mouse_grabbed(false),
             is_mouse_relative(false),
-            is_mouse_captured(false),
             is_keyboard_grabbed(false)
         {}
 
         M_Cfg& reset() {
-            size.value = size.defaultVal();
+            flags = flags.defaultVal();
+            title = title.defaultVal();
+            size = size.defaultVal();
+            position = position.defaultVal();
+            is_resizable = is_resizable.defaultVal();
+            is_maximized = is_maximized.defaultVal();
+            is_minimized = is_minimized.defaultVal();
+            is_fullscreen = is_fullscreen.defaultVal();
+            is_borderless = is_borderless.defaultVal();
+            is_hidden = is_hidden.defaultVal();
+            is_always_on_top = is_always_on_top.defaultVal();
+            is_mouse_grabbed = is_mouse_grabbed.defaultVal();
+            is_mouse_relative = is_mouse_relative.defaultVal();
+            is_keyboard_grabbed = is_keyboard_grabbed.defaultVal();
             return *this;
         }
-
-        // M_Cfg& operator= (const M_Cfg& other) = default;
     }
-    m_config;
+    m_build_config;
 
 
 public:
@@ -72,33 +81,49 @@ public:
     Window create();
     void destroy();
     bool exists();
-
-    Flags defaultFlags() const noexcept;
-    Flags& flags() noexcept;
-
     inline uint32 id() const noexcept;
-    Renderer& renderer() noexcept;
 
-    // RESIZABLE,
-    // MINIMIZED,
-    // MAXIMIZED,
-    // FULLSCREEN,
-    // BORDERLESS,
-    // HIDDEN,
-    // ALWAYS_ON_TOP,
-    // INPUT_FOCUS,
-    // MOUSE_GRABBED,
-    // MOUSE_FOCUS,
-    // MOUSE_CAPTURE,
-    // MOUSE_RELATIVE,
-    // KEYBOARD_GRABBED,
+    /** under construction **/
+    // Flags defaultFlags() const noexcept;
+    // Flags& flags() noexcept;
+
+    using sdl_WindowPtr = void*;
+    using sdl_WindowFlags = uint64;
+    static inline sdl_WindowFlags _getActiveFlags(sdl_WindowPtr win);
+    static inline void _trySetTitle(sdl_WindowPtr win, const char* title);
+    static inline void _trySetSize(sdl_WindowPtr win, int x, int y);
+    static inline void _trySetPos(sdl_WindowPtr win, int x, int y);
+    static inline void _trySetResizable(sdl_WindowPtr win, bool yes);
+    static inline void _trySetMinimized(sdl_WindowPtr win, bool yes);
+    static inline void _trySetMaximized(sdl_WindowPtr win, bool yes);
+    static inline void _trySetFullscreen(sdl_WindowPtr win, bool yes);
+    static inline void _trySetBorderless(sdl_WindowPtr win, bool yes);
+    static inline void _trySetHidden(sdl_WindowPtr win, bool yes);
+    static inline void _trySetAlwaysOnTop(sdl_WindowPtr win, bool yes);
+    static inline void _trySetMouseGrabbed(sdl_WindowPtr win, bool yes);
+    static inline void _trySetMouseRelative(sdl_WindowPtr win, bool yes);
+    static inline void _trySetKeyboardGrabbed(sdl_WindowPtr win, bool yes);
+
+    Renderer& renderer() noexcept;
+    const char* title();
+    Vec2i size();
+    Vec2i position();
+    bool isResizable();
+    bool isMaximized();
+    bool isMinimized();
+    bool isFullScreen();
+    bool isBorderless();
+    bool isHidden();
+    bool isAlwaysOnTop();
+    bool isKeyboardGrabbed();
+    bool isMouseGrabbed();
+    bool isMouseRelative();
 
 
     Window& setRenderer(const Renderer::Cfg& recreatenderer_cfg);
     Window& setTitle(const char* title);
     Window& setSize(Vec2i size);
-    Window& setPosition(Vec2i pos);
-
+    Window& setPosition(Vec2i position);
     Window& setResizable(bool yes = true);
     Window& setMaximized(bool yes = true);  Window& toggleMaximized();
     Window& setMinimized(bool yes = true);
@@ -106,10 +131,9 @@ public:
     Window& setBorderless(bool yes = true);
     Window& setHidden(bool yes = true);
     Window& setAlwaysOnTop(bool yes = true);
+    Window& setKeyboardGrabbed(bool yes = true);
     Window& setMouseGrabbed(bool yes = true);
     Window& setMouseRelative(bool yes = true);
-    Window& setMouseCapture(bool yes = true);
-    Window& setKeyboardGrabbed(bool yes = true);
 
 private:
     template<Trait> consteval static inline uint64 M_TranslateToSDL3WindowFlag();
@@ -117,9 +141,8 @@ private:
 };
 
 
-
 enum Window::Trait : uint64 {
-    DUMMY = 0,
+    NONE = 0,
 
     /* general */
     // RESIZABLE,

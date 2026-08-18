@@ -49,7 +49,7 @@ public:
 };
 
 // Ctor
-This::Renderer(This::Cfg config): impl(new Impl{}), m_config(config) {}
+This::Renderer(This::Cfg config): impl(new Impl{}), m_build_config(config) {}
 // Dtor
 This::~Renderer() {};
 
@@ -57,7 +57,7 @@ This::Renderer(Renderer&& other) noexcept
     : impl(std::move(other.impl))
 {
     other.impl = nullptr;
-    m_config = other.m_config;
+    m_build_config = other.m_build_config;
 }
 
 Renderer& This::operator= (Renderer&& other) noexcept {
@@ -66,7 +66,7 @@ Renderer& This::operator= (Renderer&& other) noexcept {
             // this->~Renderer();
         }
         impl = std::move(other.impl);  other.impl = nullptr;
-        m_config = other.m_config;
+        m_build_config = other.m_build_config;
     }
     return *this;
 }
@@ -74,7 +74,7 @@ Renderer& This::operator= (Renderer&& other) noexcept {
 
 Renderer This::create(void* window_ptr) {
     Renderer build = Renderer{};
-    build.m_config = m_config;
+    build.m_build_config = m_build_config;
 
     IF_THEN(impl->m_renderer_exists, log::error(FN"{}", __func__, me_couldnt_create_renderer_already_exists);)
 
@@ -93,7 +93,7 @@ Renderer This::create(void* window_ptr) {
 void This::destroy() {
     impl->m_renderer_exists = false;
     impl = nullptr;
-    m_config.reset();
+    m_build_config.reset();
 }
 
 bool This::exists() {
@@ -137,23 +137,29 @@ template<usize N> void This::_rectLinesN(Rect<> (&rectangle_array)[N]) {
 
 
 Renderer& This::setVsync(bool enabled) {
-    m_config.vsync.value = enabled;
+    m_build_config.vsync = enabled;
     return *this;
 }
 
 
-void This::start() {
-    ;
+void This::start(ColorU8 color) {
+    _setColorU8(color);
+    SDL_RenderClear(impl->m_renderer);
+}
+// overload for float[4] color
+void This::start(ColorF32 color) {
+    _setColorF32(color);
+    SDL_RenderClear(impl->m_renderer);
 }
 
 void This::finish() {
     SDL_RenderPresent(impl->m_renderer);
 }
 
-void This::clear(ColorU8 color) {
-    SDL_SetRenderDrawColor(impl->m_renderer, color.r, color.g, color.b, color.a);
-    SDL_RenderClear(impl->m_renderer);
-}
+// void This::clear(ColorU8 color) {
+    // SDL_SetRenderDrawColor(impl->m_renderer, color.r, color.g, color.b, color.a);
+    // SDL_RenderClear(impl->m_renderer);
+// }
 
 
 

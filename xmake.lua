@@ -5,21 +5,14 @@ set_policy("build.progress_style", "multirow")
 -- add_rules("c++.unity_build")
 
 --- TOOLCHAIN
-toolchain(".gnu")
-    set_kind("standalone"); set_toolset("cxx", "g++")
-    set_toolset("as",    "as"); set_toolset("ar",    "ar")
-    set_toolset("ld",    "g++"); set_toolset("sh",    "g++")
-    set_toolset("ex",    "g++"); set_toolset("strip", "strip")
-toolchain_end()
-
-toolchain(".llvm")
+toolchain("monako-llvm")
     set_kind("standalone"); set_toolset("cxx", "clang++");
     set_toolset("as",    "clang"); set_toolset("ar",    "llvm-ar")
     set_toolset("ld",    "clang++"); set_toolset("sh",    "clang++")
     set_toolset("ex",    "clang++"); set_toolset("strip", "llvm-strip")
 toolchain_end()
 
-set_toolchains(".llvm")
+set_toolchains("monako-llvm")
 
 
 --- SCRIPT-BEGIN
@@ -33,7 +26,9 @@ set_toolchains(".llvm")
         flags = {
             "-Wall", "-Wextra",
             "-fno-exceptions",
---             "-Wno-unused-function"
+            -- "-Wno-unused-function",
+            -- "-Wno-unused-variable",
+            -- "-Wno-unused-const-variable",
         };
     elseif is_mode("release") then
         set_optimize("fastest")
@@ -77,6 +72,14 @@ target("main")
 
 target("cstrlen")
     add_files("tests/cstrlen.cpp")
+    add_deps("monako")
+
+target("sdl")
+    add_files("tests/sdl3.cpp")
+    add_deps("monako")
+
+target("time")
+    add_files("tests/time.cpp")
     add_deps("monako")
 
 target("entity")

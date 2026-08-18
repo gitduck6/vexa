@@ -27,4 +27,13 @@ void Engine::CloseSubsystems(Flags subsystems) noexcept {
 }
 
 
+bool Engine::CaptureMouse(bool yes) noexcept {
+    return SDL_CaptureMouse(yes);
+}
+
+bool Engine::IsMouseCaptured() noexcept {
+    return (SDL_GetWindowFlags(nullptr) & SDL_WINDOW_MOUSE_CAPTURE);
+}
+
+
 NAMESPACE_END(monako)

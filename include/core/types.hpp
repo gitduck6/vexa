@@ -66,5 +66,9 @@ static_assert(sizeof(fp64) == 8, "fp64 must be 8 bytes");
 
 template<typename T, typename U> inline constexpr bool is_same_t = false;
 template<typename T> inline constexpr bool is_same_t<T, T> = true;
+template<class T, class U>
+concept is_same_as = is_same_t<T, U>;
 //
-template<class T, class U> concept is_same_as = is_same_t<T, U>;
+template<typename T, typename... U> inline constexpr bool is_any_same_t = (is_same_t<T, U> || ...);
+template<typename T, typename... U>
+concept is_any_same_as = is_any_same_t<T, U...>;

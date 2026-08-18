@@ -23,12 +23,12 @@ class [[nodiscard]] Renderer
         {}
 
         void reset() {
-            vsync.value = vsync.defaultVal();
+            vsync = vsync.defaultVal();
         }
 
         M_Cfg& operator= (const M_Cfg& other) = default;
     }
-    m_config;
+    m_build_config;
 
 
     // private methods
@@ -65,9 +65,10 @@ public:
 
     Renderer& setVsync(bool enabled = true);
 
-    void start();
+    void start(ColorU8 color);
+    void start(ColorF32 color);
     void finish();
-    void clear(ColorU8 color);
+    // void clear(ColorU8 color);
 
     void triangleFill(Triangle<> triangle, ColorU8 color);
     void triangleFill(Triangle<> triangle, ColorF32 color);

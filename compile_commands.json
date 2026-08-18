@@ -1,6 +1,36 @@
 [
 {
   "directory": "/home/ziya/dev/main/monako",
+  "arguments": ["/usr/bin/clang++", "-c", "-Qunused-arguments", "-g", "-O0", "-std=c++23", "-Iinclude", "-Wall", "-Wextra", "-fno-exceptions", "-stdlib=libc++", "-o", "build/.objs/sdl/linux/x86_64/debug/tests/sdl3.cpp.o", "tests/sdl3.cpp"],
+  "file": "tests/sdl3.cpp"
+},
+{
+  "directory": "/home/ziya/dev/main/monako",
+  "arguments": ["/usr/bin/clang++", "-c", "-Qunused-arguments", "-g", "-O0", "-std=c++23", "-Iinclude", "-Wall", "-Wextra", "-fno-exceptions", "-stdlib=libc++", "-o", "build/.objs/entity/linux/x86_64/debug/tests/entity.cpp.o", "tests/entity.cpp"],
+  "file": "tests/entity.cpp"
+},
+{
+  "directory": "/home/ziya/dev/main/monako",
+  "arguments": ["/usr/bin/clang++", "-c", "-Qunused-arguments", "-g", "-O0", "-std=c++23", "-Iinclude", "-Wall", "-Wextra", "-fno-exceptions", "-stdlib=libc++", "-o", "build/.objs/main/linux/x86_64/debug/tests/main.cpp.o", "tests/main.cpp"],
+  "file": "tests/main.cpp"
+},
+{
+  "directory": "/home/ziya/dev/main/monako",
+  "arguments": ["/usr/bin/clang++", "-c", "-Qunused-arguments", "-g", "-O0", "-std=c++23", "-Iinclude", "-Wall", "-Wextra", "-fno-exceptions", "-stdlib=libc++", "-o", "build/.objs/game/linux/x86_64/debug/tests/game.cpp.o", "tests/game.cpp"],
+  "file": "tests/game.cpp"
+},
+{
+  "directory": "/home/ziya/dev/main/monako",
+  "arguments": ["/usr/bin/clang++", "-c", "-Qunused-arguments", "-g", "-O0", "-std=c++23", "-Iinclude", "-Wall", "-Wextra", "-fno-exceptions", "-stdlib=libc++", "-o", "build/.objs/time/linux/x86_64/debug/tests/time.cpp.o", "tests/time.cpp"],
+  "file": "tests/time.cpp"
+},
+{
+  "directory": "/home/ziya/dev/main/monako",
+  "arguments": ["/usr/bin/clang++", "-c", "-Qunused-arguments", "-g", "-O0", "-std=c++23", "-Iinclude", "-Wall", "-Wextra", "-fno-exceptions", "-stdlib=libc++", "-o", "build/.objs/cstrlen/linux/x86_64/debug/tests/cstrlen.cpp.o", "tests/cstrlen.cpp"],
+  "file": "tests/cstrlen.cpp"
+},
+{
+  "directory": "/home/ziya/dev/main/monako",
   "arguments": ["/usr/bin/clang++", "-c", "-Qunused-arguments", "-g", "-O0", "-std=c++23", "-Iinclude", "-Wall", "-Wextra", "-fno-exceptions", "-stdlib=libc++", "-o", "build/.objs/monako/linux/x86_64/debug/src/Renderer.cpp.o", "src/Renderer.cpp"],
   "file": "src/Renderer.cpp"
 },
@@ -18,24 +48,4 @@
   "directory": "/home/ziya/dev/main/monako",
   "arguments": ["/usr/bin/clang++", "-c", "-Qunused-arguments", "-g", "-O0", "-std=c++23", "-Iinclude", "-Wall", "-Wextra", "-fno-exceptions", "-stdlib=libc++", "-o", "build/.objs/monako/linux/x86_64/debug/src/time.cpp.o", "src/time.cpp"],
   "file": "src/time.cpp"
-},
-{
-  "directory": "/home/ziya/dev/main/monako",
-  "arguments": ["/usr/bin/clang++", "-c", "-Qunused-arguments", "-g", "-O0", "-std=c++23", "-Iinclude", "-Wall", "-Wextra", "-fno-exceptions", "-stdlib=libc++", "-o", "build/.objs/main/linux/x86_64/debug/tests/main.cpp.o", "tests/main.cpp"],
-  "file": "tests/main.cpp"
-},
-{
-  "directory": "/home/ziya/dev/main/monako",
-  "arguments": ["/usr/bin/clang++", "-c", "-Qunused-arguments", "-g", "-O0", "-std=c++23", "-Iinclude", "-Wall", "-Wextra", "-fno-exceptions", "-stdlib=libc++", "-o", "build/.objs/cstrlen/linux/x86_64/debug/tests/cstrlen.cpp.o", "tests/cstrlen.cpp"],
-  "file": "tests/cstrlen.cpp"
-},
-{
-  "directory": "/home/ziya/dev/main/monako",
-  "arguments": ["/usr/bin/clang++", "-c", "-Qunused-arguments", "-g", "-O0", "-std=c++23", "-Iinclude", "-Wall", "-Wextra", "-fno-exceptions", "-stdlib=libc++", "-o", "build/.objs/game/linux/x86_64/debug/tests/game.cpp.o", "tests/game.cpp"],
-  "file": "tests/game.cpp"
-},
-{
-  "directory": "/home/ziya/dev/main/monako",
-  "arguments": ["/usr/bin/clang++", "-c", "-Qunused-arguments", "-g", "-O0", "-std=c++23", "-Iinclude", "-Wall", "-Wextra", "-fno-exceptions", "-stdlib=libc++", "-o", "build/.objs/entity/linux/x86_64/debug/tests/entity.cpp.o", "tests/entity.cpp"],
-  "file": "tests/entity.cpp"
 }]
