@@ -1,6 +1,6 @@
 #pragma once
 #include "core/common.hpp"
-NAMESPACE_BEGIN(monako)
+NAMESPACE_BEGIN(cone)
 
 
 class MK_NODISCARD Event
@@ -29,8 +29,8 @@ private:
     constexpr static inline uint64 M_ToSDL3EventTypeRuntime(Type type) noexcept;
     consteval static inline uint64 M_ToSDL3EventTypeCompt(Type type) noexcept;
     // ..
-    constexpr static inline Type M_ToMonakoEventTypeRuntime(uint64 type) noexcept;
-    consteval static inline Type M_ToMonakoEventTypeCompt(uint64 type) noexcept;
+    constexpr static inline Type M_ToConeEventTypeRuntime(uint64 type) noexcept;
+    consteval static inline Type M_ToConeEventTypeCompt(uint64 type) noexcept;
 };
 
 
@@ -45,4 +45,4 @@ enum MK_NODISCARD Event::Type : uint64 {
 
 
 
-NAMESPACE_END(monako)
+NAMESPACE_END(cone)

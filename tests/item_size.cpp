@@ -1,6 +1,6 @@
 #include "../include/core/common.hpp"
 
-namespace mk = monako;
+namespace mk = cone;
 
 int main() {
     constexpr usize BUFFER_SIZE = { 24 };

@@ -1,6 +1,6 @@
 #include "alt/SDL3.hpp"
 #include "../include/Renderer.hpp"
-NAMESPACE_BEGIN(monako)
+NAMESPACE_BEGIN(cone)
 
 
 #define FN "Renderer::{}(): "
@@ -233,4 +233,4 @@ template<usize N> void This::rectLinesN(Rect<> (&rectangle_array)[N], ColorF32 c
 }
 
 
-NAMESPACE_END(monako)
+NAMESPACE_END(cone)

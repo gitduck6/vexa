@@ -1,6 +1,6 @@
 #pragma once
 #include "defs.hpp"
-NAMESPACE_BEGIN(monako)
+NAMESPACE_BEGIN(cone)
 
 
 class MK_NODISCARD Flags {
@@ -52,4 +52,4 @@ public:
 };
 
 
-NAMESPACE_END(monako)
+NAMESPACE_END(cone)

@@ -1,10 +1,10 @@
-#include "monako.hpp"
+#include "cone.hpp"
 
-#define LOGGER  monako::log::info
+#define LOGGER  cone::log::info
 #define LOG(_msg)  LOGGER(_msg);
 #define LOGV(_msg, ...)  LOGGER(_msg, __VA_ARGS__);
 
-namespace mt = monako::time;
+namespace mt = cone::time;
 
 int main()
 {

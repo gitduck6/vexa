@@ -1,6 +1,6 @@
 #pragma once
 #include "Window.hpp"
-NAMESPACE_BEGIN(monako)
+NAMESPACE_BEGIN(cone)
 
 class Engine
 {
@@ -21,4 +21,4 @@ public:
 
 
 
-NAMESPACE_END(monako)
+NAMESPACE_END(cone)

@@ -1,7 +1,7 @@
 #pragma once
 #include "defs.hpp"
 #include <cmath>
-NAMESPACE_BEGIN(monako)
+NAMESPACE_BEGIN(cone)
 NAMESPACE_BEGIN(math)
 
 // compile time PI as fp32 and fp64
@@ -65,4 +65,4 @@ constexpr auto clamp(V value, T min, U max) -> std::common_type_t<V, T, U> {
 
 
 NAMESPACE_END(math)
-NAMESPACE_END(monako)
+NAMESPACE_END(cone)

@@ -1,7 +1,7 @@
 #pragma once
 #include "defs.hpp"
 #include <concepts>
-NAMESPACE_BEGIN(monako)
+NAMESPACE_BEGIN(cone)
 inline NAMESPACE_BEGIN(vec)
 
 
@@ -37,4 +37,4 @@ struct Vec2f {
 
 
 NAMESPACE_END(vec)
-NAMESPACE_END(monako)
+NAMESPACE_END(cone)

@@ -1,6 +1,6 @@
 #include "alt/SDL3.hpp"
 #include "../include/Window.hpp"
-NAMESPACE_BEGIN(monako)
+NAMESPACE_BEGIN(cone)
 
 #define FN "Window::{}(): "
 
@@ -489,4 +489,4 @@ Window& This::setMouseRelative(bool yes) {
 }
 
 
-NAMESPACE_END(monako)
+NAMESPACE_END(cone)

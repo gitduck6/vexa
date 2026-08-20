@@ -1,17 +1,17 @@
-#include "monako.hpp"
+#include "cone.hpp"
 #include "alt/SDL3.hpp"
 
-namespace mnk = monako;
+namespace cn = cone;
 
 auto main() -> int
 {
-    using monako::Engine;
-    using monako::Window;
-    using monako::Renderer;
-    using monako::ColorU8;
-    using monako::Rect;
-    namespace log = monako::log;
-    namespace time = monako::time;
+    using cone::Engine;
+    using cone::Window;
+    using cone::Renderer;
+    using cone::ColorU8;
+    using cone::Rect;
+    namespace log = cone::log;
+    namespace time = cone::time;
     Engine::Init(Engine::VIDEO);
 
     Window::Cfg window_cfg = {};

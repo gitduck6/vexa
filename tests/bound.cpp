@@ -1,11 +1,11 @@
 #include <vector>
 #include <csetjmp>
 #include <csignal>
-#include "monako.hpp"
+#include "cone.hpp"
 
 #define TEST_TEMPLATE  "TEST {}(): - {}"
 
-namespace mk = monako;
+namespace mk = cone;
 constexpr const char* bool_to_msg(bool status);
 static sigjmp_buf jump_env;
 void bounds_signal_handler(int);

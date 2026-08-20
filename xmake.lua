@@ -5,14 +5,14 @@ set_policy("build.progress_style", "multirow")
 -- add_rules("c++.unity_build")
 
 --- TOOLCHAIN
-toolchain("monako-llvm")
+toolchain("cone-llvm")
     set_kind("standalone"); set_toolset("cxx", "clang++");
     set_toolset("as",    "clang"); set_toolset("ar",    "llvm-ar")
     set_toolset("ld",    "clang++"); set_toolset("sh",    "clang++")
     set_toolset("ex",    "clang++"); set_toolset("strip", "llvm-strip")
 toolchain_end()
 
-set_toolchains("monako-llvm")
+set_toolchains("cone-llvm")
 
 
 --- SCRIPT-BEGIN
@@ -58,18 +58,18 @@ add_ldflags("-stdlib=libc++")
 add_defines("_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_DEBUG")
 
 --- TARGETS
-target("monako")
+target("cone")
     set_kind("object")
     add_files("src/*.cpp")
     add_packages("libsdl3")
 
-target("game")    add_files("tests/game.cpp")    add_deps("monako")
-target("main")    add_files("tests/main.cpp")    add_deps("monako")
-target("meter")    add_files("tests/meter.cpp")    add_deps("monako")
-target("cstrlen") add_files("tests/cstrlen.cpp") add_deps("monako")
-target("size") add_files("tests/item_size.cpp") add_deps("monako")
-target("ref") add_files("tests/ref.cpp") add_deps("monako")
-target("sdl")     add_files("tests/sdl3.cpp")    add_deps("monako")
-target("bound")     add_files("tests/bound.cpp")    add_deps("monako")
-target("time")    add_files("tests/time.cpp")    add_deps("monako")
-target("entity")  add_files("tests/entity.cpp")  add_deps("monako")
+target("game")    add_files("tests/game.cpp")    add_deps("cone")
+target("main")    add_files("tests/main.cpp")    add_deps("cone")
+target("meter")    add_files("tests/meter.cpp")    add_deps("cone")
+target("cstrlen") add_files("tests/cstrlen.cpp") add_deps("cone")
+target("size") add_files("tests/item_size.cpp") add_deps("cone")
+target("ref") add_files("tests/ref.cpp") add_deps("cone")
+target("sdl")     add_files("tests/sdl3.cpp")    add_deps("cone")
+target("bound")     add_files("tests/bound.cpp")    add_deps("cone")
+target("time")    add_files("tests/time.cpp")    add_deps("cone")
+target("entity")  add_files("tests/entity.cpp")  add_deps("cone")

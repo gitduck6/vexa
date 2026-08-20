@@ -1,6 +1,6 @@
-#include "monako.hpp"
+#include "cone.hpp"
 
-namespace mk = monako;
+namespace mk = cone;
 
 int main()
 {

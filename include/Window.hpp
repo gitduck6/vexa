@@ -1,6 +1,6 @@
 #pragma once
 #include "Renderer.hpp"
-NAMESPACE_BEGIN(monako)
+NAMESPACE_BEGIN(cone)
 
 class MK_NODISCARD Window
 {
@@ -180,4 +180,4 @@ enum MK_NODISCARD Window::Trait : uint64 {
 };
 
 
-NAMESPACE_END(monako)
+NAMESPACE_END(cone)

@@ -3,13 +3,13 @@
 
 #define NAMESPACE_BEGIN(_name) namespace _name {
 #define NAMESPACE_END(_name) }
-#define TODO(_msg) auto _monako_todo = _msg
+#define TODO(_msg) auto _cone_todo = _msg
 #define IF_THEN(_cond, _stmt) if((_cond)) {DEFINE_STMT(_stmt)}
 
 
-#define DEBUG_LN() (void)(monako::log::debug("{}:{} -> {}()", __FILE__, __LINE__, __func__), "")
+#define DEBUG_LN() (void)(cone::log::debug("{}:{} -> {}()", __FILE__, __LINE__, __func__), "")
 #define DEBUG_FUNC_MODE __func__
-#define DEBUG_FUNC_TEMPLATE(_mode) DEFINE_STMT(monako::log::debug("{}()", _mode);)
+#define DEBUG_FUNC_TEMPLATE(_mode) DEFINE_STMT(cone::log::debug("{}()", _mode);)
 #define DEBUG_FUNC() DEBUG_FUNC_TEMPLATE(DEBUG_FUNC_MODE)
 
 
@@ -23,4 +23,4 @@
 
 #define MK_NODISCARD  [[nodiscard]]
 #define MK_UNUSE(...)  (unuse_symbol(__VA_ARGS__));
-namespace monako { template<typename... Args> constexpr void unuse_symbol(Args&&...) noexcept {} }
+namespace cone { template<typename... Args> constexpr void unuse_symbol(Args&&...) noexcept {} }

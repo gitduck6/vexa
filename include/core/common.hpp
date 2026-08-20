@@ -10,7 +10,7 @@
 #include "core/vec.hpp"
 #include "core/log.hpp"
 #include "core/Flags.hpp"
-NAMESPACE_BEGIN(monako)
+NAMESPACE_BEGIN(cone)
 
 
 inline consteval usize cstr_len(const char* cstr) noexcept {
@@ -115,4 +115,4 @@ public:
 };
 
 
-NAMESPACE_END(monako)
+NAMESPACE_END(cone)

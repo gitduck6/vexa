@@ -1,6 +1,6 @@
 #include "alt/SDL3.hpp"
 #include "Engine.hpp"
-NAMESPACE_BEGIN(monako)
+NAMESPACE_BEGIN(cone)
 
 bool Engine::Init(const Flags initial_subsystems) noexcept {
     if (!m_init) {
@@ -40,4 +40,4 @@ MK_NODISCARD bool Engine::IsMouseCaptured() noexcept {
 }
 
 
-NAMESPACE_END(monako)
+NAMESPACE_END(cone)

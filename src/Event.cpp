@@ -1,6 +1,6 @@
 #include "alt/SDL3.hpp"
 #include "Event.hpp"
-NAMESPACE_BEGIN(monako)
+NAMESPACE_BEGIN(cone)
 
 using This = Event;
 
@@ -30,14 +30,14 @@ consteval inline uint64 This::M_ToSDL3EventTypeCompt(This::Type type) noexcept
     return M_ToSDL3EventTypeRuntime(type);
 }
 
-constexpr inline This::Type This::M_ToMonakoEventTypeRuntime(uint64 sdl_type) noexcept
+constexpr inline This::Type This::M_ToConeEventTypeRuntime(uint64 sdl_type) noexcept
 {
     for(const auto& [mk_type, _sdl_type] : type_maps)  if(_sdl_type == sdl_type)  return mk_type;
     return This::UNKNOWN;
 }
-consteval inline This::Type This::M_ToMonakoEventTypeCompt(uint64 type) noexcept
+consteval inline This::Type This::M_ToConeEventTypeCompt(uint64 type) noexcept
 {
-    return M_ToMonakoEventTypeRuntime(type);
+    return M_ToConeEventTypeRuntime(type);
 }
 
 
@@ -50,7 +50,7 @@ std::optional<Event> This::Poll() noexcept {
     IF_THEN(!SDL_PollEvent(&event),   return std::nullopt;);
 
     Event build;
-    build.m_type = M_ToMonakoEventTypeRuntime(event.type);
+    build.m_type = M_ToConeEventTypeRuntime(event.type);
 
     return build;
 }
@@ -71,4 +71,4 @@ bool This::is_last() const noexcept {
 }
 
 
-NAMESPACE_END(monako)
+NAMESPACE_END(cone)

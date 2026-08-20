@@ -1,7 +1,7 @@
 #pragma once
 #include <concepts>
 #include "core/defs.hpp"
-NAMESPACE_BEGIN(monako::time)
+NAMESPACE_BEGIN(cone::time)
 
 
 // Duration and variants
@@ -139,4 +139,4 @@ void sleep(DurationT amount) {
 
 
 
-NAMESPACE_END(monako::time)
+NAMESPACE_END(cone::time)

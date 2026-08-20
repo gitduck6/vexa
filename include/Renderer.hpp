@@ -1,7 +1,7 @@
 #pragma once
 #include "alt/memory.hpp"
 #include "core/common.hpp"
-NAMESPACE_BEGIN(monako)
+NAMESPACE_BEGIN(cone)
 
 
 class MK_NODISCARD Renderer
@@ -95,4 +95,4 @@ public:
     void circleLines(Vec2f size, Vec2f pos, ColorU8 color);
 };
 
-NAMESPACE_END(monako)
+NAMESPACE_END(cone)

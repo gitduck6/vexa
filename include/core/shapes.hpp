@@ -3,7 +3,7 @@
 #include "vec.hpp"
 #include "math.hpp"
 // forward declare cmath functions
-NAMESPACE_BEGIN(monako)
+NAMESPACE_BEGIN(cone)
 inline NAMESPACE_BEGIN(shapes)
 
 
@@ -123,4 +123,4 @@ struct Circle {
 
 
 NAMESPACE_END(shapes)
-NAMESPACE_END(monako)
+NAMESPACE_END(cone)
