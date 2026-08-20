@@ -6,7 +6,7 @@ NAMESPACE_BEGIN(monako::time)
 
 // Duration and variants
 template<typename ValueT, uint64> requires std::is_arithmetic_v<ValueT>
-class [[nodiscard]] Duration;
+class MK_NODISCARD Duration;
 using Nanos = Duration<int64, 1lu>;
 using Micros = Duration<int64, 1'000lu>;
 using Millis = Duration<fp64, 1'000'000lu>;
@@ -35,7 +35,7 @@ Date now();
 // @arg t_ratio - 1:nano, 1000:micro, etc.
 template<typename ValueType, uint64 t_ratio>
 requires std::is_arithmetic_v<ValueType>
-class [[nodiscard]] Duration
+class MK_NODISCARD Duration
 {
     ValueType m_nanos = 0;
 
@@ -67,9 +67,9 @@ public:
     consteval inline uint64 ratio() const noexcept { return t_ratio; }
     constexpr inline ValueT amount() const noexcept { return m_nanos / static_cast<ValueT>(t_ratio); }
     constexpr inline ValueT nanos() const noexcept { return m_nanos; }
-    constexpr inline ValueT micros() const noexcept { return m_nanos / 1'000lu; }
-    constexpr inline ValueT millis() const noexcept { return m_nanos / 1'000'000lu; }
-    constexpr inline ValueT seconds() const noexcept { return m_nanos / 1'000'000'000lu; }
+    constexpr inline ValueT micros() const noexcept { return m_nanos / 1'000.0l; }
+    constexpr inline ValueT millis() const noexcept { return m_nanos / 1'000'000.0l; }
+    constexpr inline ValueT seconds() const noexcept { return m_nanos / 1'000'000'000.0l; }
 };
 
 

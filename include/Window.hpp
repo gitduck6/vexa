@@ -2,18 +2,18 @@
 #include "Renderer.hpp"
 NAMESPACE_BEGIN(monako)
 
-class [[nodiscard]] Window
+class MK_NODISCARD Window
 {
     class Impl;
     Uptr<Impl> impl;
 
 
-    class [[nodiscard]] M_Cfg
+    class MK_NODISCARD M_Cfg
     {
         friend class Window;
     public:
         ConfigValue<Flags> flags;
-    private:
+    // private:
         ConfigValue<const char*> title;
         ConfigValue<Vec2i> size;
         ConfigValue<Vec2i> position;
@@ -87,22 +87,22 @@ public:
     // Flags defaultFlags() const noexcept;
     // Flags& flags() noexcept;
 
-    using sdl_WindowPtr = void*;
-    using sdl_WindowFlags = uint64;
-    static inline sdl_WindowFlags _getActiveFlags(sdl_WindowPtr win);
-    static inline void _trySetTitle(sdl_WindowPtr win, const char* title);
-    static inline void _trySetSize(sdl_WindowPtr win, int x, int y);
-    static inline void _trySetPos(sdl_WindowPtr win, int x, int y);
-    static inline void _trySetResizable(sdl_WindowPtr win, bool yes);
-    static inline void _trySetMinimized(sdl_WindowPtr win, bool yes);
-    static inline void _trySetMaximized(sdl_WindowPtr win, bool yes);
-    static inline void _trySetFullscreen(sdl_WindowPtr win, bool yes);
-    static inline void _trySetBorderless(sdl_WindowPtr win, bool yes);
-    static inline void _trySetHidden(sdl_WindowPtr win, bool yes);
-    static inline void _trySetAlwaysOnTop(sdl_WindowPtr win, bool yes);
-    static inline void _trySetMouseGrabbed(sdl_WindowPtr win, bool yes);
-    static inline void _trySetMouseRelative(sdl_WindowPtr win, bool yes);
-    static inline void _trySetKeyboardGrabbed(sdl_WindowPtr win, bool yes);
+    using M_WindowPtr = void*;
+    using M_WindowFlags = uint64;
+    static inline M_WindowFlags _getActiveFlags(M_WindowPtr win);
+    static inline void _trySetTitle(M_WindowPtr win, const char* title);
+    static inline void _trySetSize(M_WindowPtr win, int x, int y);
+    static inline void _trySetPos(M_WindowPtr win, int x, int y);
+    static inline void _trySetResizable(M_WindowPtr win, bool yes);
+    static inline void _trySetMinimized(M_WindowPtr win, bool yes);
+    static inline void _trySetMaximized(M_WindowPtr win, bool yes);
+    static inline void _trySetFullscreen(M_WindowPtr win, bool yes);
+    static inline void _trySetBorderless(M_WindowPtr win, bool yes);
+    static inline void _trySetHidden(M_WindowPtr win, bool yes);
+    static inline void _trySetAlwaysOnTop(M_WindowPtr win, bool yes);
+    static inline void _trySetMouseGrabbed(M_WindowPtr win, bool yes);
+    static inline void _trySetMouseRelative(M_WindowPtr win, bool yes);
+    static inline void _trySetKeyboardGrabbed(M_WindowPtr win, bool yes);
 
     Renderer& renderer() noexcept;
     const char* title();
@@ -136,12 +136,12 @@ public:
     Window& setMouseRelative(bool yes = true);
 
 private:
-    template<Trait> consteval static inline uint64 M_TranslateToSDL3WindowFlag();
-    static inline uint64 M_TranslateToSDL3WindowFlagRuntime(uint64 traits);
+    template<Trait> consteval static inline uint64 M_ToSDL3WindowFlag();
+    static inline uint64 M_ToSDL3WindowFlagRuntime(uint64 traits);
 };
 
 
-enum Window::Trait : uint64 {
+enum MK_NODISCARD Window::Trait : uint64 {
     NONE = 0,
 
     /* general */

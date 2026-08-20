@@ -5,10 +5,12 @@ NAMESPACE_BEGIN(monako)
 
 #define FN "Renderer::{}(): "
 
+
 /*
  * I used a little ambigious and unusual naming here(for shorter names):
  * m - message,  f - fatal, e - error  (before first underscore)
  */
+IGNORE_WARNING_BEGIN("-Wunused-const-variable")
 #define DEF_MSG static constexpr inline const char* const
     DEF_MSG mf_failed_to_create_renderer
         { "an error occured while creating the renderer" };
@@ -23,6 +25,7 @@ NAMESPACE_BEGIN(monako)
         { "couldn't create renderer because it already exists" };
 
 #undef DEF_MSG
+IGNORE_WARNING_END("-Wunused-const-variable")
 
 
 
@@ -115,6 +118,29 @@ void This::_line(Vec2f pos1, Vec2f pos2) {
 }
 
 
+void This::_triangleFill(Triangle<> triangle, ColorF32 color) {
+    const SDL_Vertex vertices[3] = {
+        SDL_Vertex {
+            .position = {triangle.first.x, triangle.first.y},
+            .color = {color.r, color.g, color.b, color.a},
+            .tex_coord = {0.0, 0.0},
+        },
+        SDL_Vertex {
+            .position = {triangle.middle.x, triangle.middle.y},
+            .color = {color.r, color.g, color.b, color.a},
+            .tex_coord = {0.0, 0.0},
+        },
+        SDL_Vertex {
+            .position = {triangle.last.x, triangle.last.y},
+            .color = {color.r, color.g, color.b, color.a},
+            .tex_coord = {0.0, 0.0},
+        }
+    };
+
+    SDL_RenderGeometry(impl->m_renderer,
+        nullptr, vertices, 3, nullptr, 0
+    );
+}
 
 void This::_rectFill(Rect<> rect) {
     const SDL_FRect sdl_rect = {rect.pos.x, rect.pos.y, rect.size.x, rect.size.y};
@@ -156,10 +182,25 @@ void This::finish() {
     SDL_RenderPresent(impl->m_renderer);
 }
 
-// void This::clear(ColorU8 color) {
-    // SDL_SetRenderDrawColor(impl->m_renderer, color.r, color.g, color.b, color.a);
-    // SDL_RenderClear(impl->m_renderer);
-// }
+
+
+
+void This::triangleFill(Triangle<> triangle, ColorU8 color) {
+    _setColorU8(color);
+    
+}
+
+void This::triangleFill(Triangle<> triangle, ColorF32 color) {
+    _setColorF32(color);
+}
+
+void This::triangleLines(Triangle<> triangle, ColorU8 color) {
+    _setColorU8(color);
+}
+
+void This::triangleLines(Triangle<> triangle, ColorF32 color) {
+    _setColorF32(color);
+}
 
 
 

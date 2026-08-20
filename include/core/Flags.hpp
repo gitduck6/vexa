@@ -3,7 +3,7 @@
 NAMESPACE_BEGIN(monako)
 
 
-class Flags {
+class MK_NODISCARD Flags {
     using This = Flags;
     uint32 m_value;
 
@@ -16,7 +16,7 @@ public:
 
 
     // Getters
-    constexpr Value value() const noexcept { return m_value; }
+    MK_NODISCARD constexpr Value value() const noexcept { return m_value; }
     constexpr bool has(const Flags& flags) const noexcept { return (m_value & flags.m_value)!=0; }
 
     // sets the value directly

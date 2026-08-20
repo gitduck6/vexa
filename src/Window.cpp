@@ -31,12 +31,12 @@ NAMESPACE_BEGIN()
 using enum Window::Trait;
 
 struct TraitMap {
-    Window::Trait trait;
+    This::Trait trait;
     uint64 flag;
 };
 
 
-constexpr TraitMap mappings[] = {
+static constexpr TraitMap flag_maps[] = {
     // { RESIZABLE,     SDL_WINDOW_RESIZABLE },
     // { MINIMIZED,     SDL_WINDOW_MINIMIZED },
     // { MAXIMIZED,     SDL_WINDOW_MAXIMIZED },
@@ -68,17 +68,17 @@ constexpr TraitMap mappings[] = {
 NAMESPACE_END()
 
 template<This::Trait traits>
-consteval static inline uint64 M_TranslateToSDL3WindowFlag() {
+consteval inline uint64 This::M_ToSDL3WindowFlag() {
     uint64 sdl_flags = 0;
-    for (const auto& m : mappings) {
+    for (const auto& m : flag_maps) {
         if (traits & m.trait) sdl_flags |= m.flag;
     }
     return sdl_flags;
 }
 
-uint64 This::M_TranslateToSDL3WindowFlagRuntime(uint64 traits) {
+uint64 This::M_ToSDL3WindowFlagRuntime(uint64 traits) {
     uint64 sdl_flags = 0;
-    for (const auto& m : mappings) {
+    for (const auto& m : flag_maps) {
         if (traits & static_cast<uint64>(m.trait)) sdl_flags |= m.flag;
     }
     return sdl_flags;
@@ -114,7 +114,7 @@ public:
         {
             m_window = SDL_CreateWindow(
                 config.title, config.size->x, config.size->y,
-                This::M_TranslateToSDL3WindowFlagRuntime(config.flags->value())
+                This::M_ToSDL3WindowFlagRuntime(config.flags->value())
             );
             IF_THEN(!m_window,   log::fatal(FN"{}", __func__, mf_failed_to_create_window);)
 
@@ -212,7 +212,7 @@ inline uint32 This::id() const noexcept {
 
 Renderer& This::renderer() noexcept {
     IF_THEN(!impl,
-        log::info(FN"{}", __func__, mf_window_never_existed_before);
+        log::fatal(FN"{}", __func__, mf_window_never_existed_before);
     );
     IF_THEN(!impl->window_ever_existed,
         log::fatal(FN"{}", __func__, mf_window_never_existed_before);
@@ -284,25 +284,25 @@ bool This::isMouseGrabbed() {
 
 
 
-This::sdl_WindowFlags This::_getActiveFlags(sdl_WindowPtr win) {
+This::M_WindowFlags This::_getActiveFlags(M_WindowPtr win) {
     return SDL_GetWindowFlags((SDL_Window*)win);
 }
 
 #define TRY_SET_FAILED(_prop)  "Failed to set " _prop " property "
 
-void This::_trySetTitle(This::sdl_WindowPtr win, const char* title) {
+void This::_trySetTitle(This::M_WindowPtr win, const char* title) {
     if (!SDL_SetWindowTitle((SDL_Window*)win, title)) {
         log::error(TRY_SET_FAILED("title") "to \"{}\"", title);
     }
 }
 
-void This::_trySetSize(This::sdl_WindowPtr win, int x, int y) {
+void This::_trySetSize(This::M_WindowPtr win, int x, int y) {
     if (!SDL_SetWindowSize((SDL_Window*)win, x, y)) {
         log::error(TRY_SET_FAILED("size") "to {{{},{}}}", x, y);
     }
 }
 
-void This::_trySetPos(This::sdl_WindowPtr win, int x, int y) {
+void This::_trySetPos(This::M_WindowPtr win, int x, int y) {
     if (!SDL_SetWindowPosition((SDL_Window*)win, x, y)) {
         log::error(
             TRY_SET_FAILED("position") "to {{{}, {}}}, "
@@ -311,13 +311,13 @@ void This::_trySetPos(This::sdl_WindowPtr win, int x, int y) {
     }
 }
 
-void This::_trySetResizable(This::sdl_WindowPtr win, bool yes) {
+void This::_trySetResizable(This::M_WindowPtr win, bool yes) {
     if (!SDL_SetWindowResizable((SDL_Window*)win, yes)) {
         log::error(TRY_SET_FAILED("is-resizable") "to {}", yes);
     }
 }
 
-void This::_trySetMinimized(This::sdl_WindowPtr win, bool yes) {
+void This::_trySetMinimized(This::M_WindowPtr win, bool yes) {
     if (yes) {
         if (!SDL_MinimizeWindow((SDL_Window*)win)) {
             log::error(TRY_SET_FAILED("is-minimized") "to {}", true);
@@ -330,7 +330,7 @@ void This::_trySetMinimized(This::sdl_WindowPtr win, bool yes) {
     }
 }
 
-void This::_trySetMaximized(This::sdl_WindowPtr win, bool yes) {
+void This::_trySetMaximized(This::M_WindowPtr win, bool yes) {
     if (yes) {
         if (!SDL_MaximizeWindow((SDL_Window*)win)) {
             log::error(TRY_SET_FAILED("is-maximized") "to {}", true);
@@ -343,19 +343,19 @@ void This::_trySetMaximized(This::sdl_WindowPtr win, bool yes) {
     }
 }
 
-void This::_trySetFullscreen(This::sdl_WindowPtr win, bool yes) {
+void This::_trySetFullscreen(This::M_WindowPtr win, bool yes) {
     if (!SDL_SetWindowFullscreen((SDL_Window*)win, yes)) {
         log::error(TRY_SET_FAILED("is-fullscreen") "to {}", yes);
     }
 }
 
-void This::_trySetBorderless(This::sdl_WindowPtr win, bool yes) {
+void This::_trySetBorderless(This::M_WindowPtr win, bool yes) {
     if (!SDL_SetWindowBordered((SDL_Window*)win, !yes)) {
         log::error(TRY_SET_FAILED("is-borderless") "to {}", !yes);
     }
 }
 
-void This::_trySetHidden(This::sdl_WindowPtr win, bool yes) {
+void This::_trySetHidden(This::M_WindowPtr win, bool yes) {
     if (yes) {
         if (!SDL_HideWindow((SDL_Window*)win)) {
             log::error(TRY_SET_FAILED("is-hidden") "to {}", true);
@@ -368,25 +368,25 @@ void This::_trySetHidden(This::sdl_WindowPtr win, bool yes) {
     }
 }
 
-void This::_trySetAlwaysOnTop(This::sdl_WindowPtr win, bool yes) {
+void This::_trySetAlwaysOnTop(This::M_WindowPtr win, bool yes) {
     if (!SDL_SetWindowAlwaysOnTop((SDL_Window*)win, yes)) {
         log::error(TRY_SET_FAILED("is-always-on-top") "to {}", yes);
     }
 }
 
-void This::_trySetKeyboardGrabbed(This::sdl_WindowPtr win, bool yes) {
+void This::_trySetKeyboardGrabbed(This::M_WindowPtr win, bool yes) {
     if (!SDL_SetWindowKeyboardGrab((SDL_Window*)win, yes)) {
         log::error(TRY_SET_FAILED("is-keyboard-grabbed") "to {}", yes);
     }
 }
 
-void This::_trySetMouseGrabbed(This::sdl_WindowPtr win, bool yes) {
+void This::_trySetMouseGrabbed(This::M_WindowPtr win, bool yes) {
     if (!SDL_SetWindowMouseGrab((SDL_Window*)win, yes)) {
         log::error(TRY_SET_FAILED("is-mouse-grabbed") "to {}", yes);
     }
 }
 
-void This::_trySetMouseRelative(This::sdl_WindowPtr win, bool yes) {
+void This::_trySetMouseRelative(This::M_WindowPtr win, bool yes) {
     if (!SDL_SetWindowRelativeMouseMode((SDL_Window*)win, yes)) {
         log::error(TRY_SET_FAILED("is-mouse-relative") "to {}", yes);
     }

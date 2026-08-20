@@ -4,14 +4,14 @@
 NAMESPACE_BEGIN(monako)
 
 
-class [[nodiscard]] Renderer
+class MK_NODISCARD Renderer
 {
     // friend needs to access this->impl
     friend class Window;
     class Impl;
     std::unique_ptr<Impl> impl;
 
-    class [[nodiscard]] M_Cfg
+    class MK_NODISCARD M_Cfg
     {
         friend class Renderer;
         friend class Window;

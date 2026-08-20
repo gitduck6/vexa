@@ -15,8 +15,12 @@
 
 #define DO_PRAGMA(_x) _Pragma(#_x)
 #define DEFINE_STMT(_stmt) do {_stmt} while(false);
-#define DIAGNOSTIC_IGNORE_BEGIN(_diag) \
+#define IGNORE_WARNING_BEGIN(_diag) \
     DO_PRAGMA(GCC diagnostic push) \
     DO_PRAGMA(GCC diagnostic ignored _diag)
-#define DIAGNOSTIC_IGNORE_END() \
+#define IGNORE_WARNING_END(_diag_optional_arg) \
     DO_PRAGMA(GCC diagnostic pop)
+
+#define MK_NODISCARD  [[nodiscard]]
+#define MK_UNUSE(...)  (unuse_symbol(__VA_ARGS__));
+namespace monako { template<typename... Args> constexpr void unuse_symbol(Args&&...) noexcept {} }

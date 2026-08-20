@@ -3,23 +3,27 @@
 NAMESPACE_BEGIN(monako)
 
 bool Engine::Init(const Flags initial_subsystems) noexcept {
-    if (!_m_init) {
-        _m_init = true;
-        return InitSubsystems(initial_subsystems);
+    if (!m_init) {
+        m_init = true;
+        m_subsystems = initial_subsystems;
+        return InitSubsystems(m_subsystems);
     }
     return false;
 }
 
+
 void Engine::Close() noexcept {
-    subsystems.reset().value();
-    _m_init = false;
+    m_init = false;
+    m_subsystems.reset();
     SDL_Quit();
 }
 
+
 bool Engine::InitSubsystems(Flags subsystems) noexcept {
-    subsystems.add(subsystems);
-    return SDL_InitSubSystem(subsystems.value());
+    m_subsystems.add(subsystems);
+    return SDL_InitSubSystem(m_subsystems.value());
 }
+
 
 void Engine::CloseSubsystems(Flags subsystems) noexcept {
     subsystems.sub(subsystems);
@@ -27,11 +31,11 @@ void Engine::CloseSubsystems(Flags subsystems) noexcept {
 }
 
 
-bool Engine::CaptureMouse(bool yes) noexcept {
+bool Engine::setMouseCaptured(bool yes) noexcept {
     return SDL_CaptureMouse(yes);
 }
 
-bool Engine::IsMouseCaptured() noexcept {
+MK_NODISCARD bool Engine::IsMouseCaptured() noexcept {
     return (SDL_GetWindowFlags(nullptr) & SDL_WINDOW_MOUSE_CAPTURE);
 }
 

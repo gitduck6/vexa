@@ -4,9 +4,9 @@ NAMESPACE_BEGIN(monako)
 
 class Engine
 {
-    static inline bool _m_init = false;
+    static inline bool m_init = false;
+    static inline Flags m_subsystems;
 
-    static inline Flags subsystems;
 public:
     enum Subsystem { VIDEO, AUDIO, EVENT };
 
@@ -15,7 +15,7 @@ public:
     static bool InitSubsystems(Flags subsystems) noexcept;
     static void CloseSubsystems(Flags subsystems) noexcept;
 
-    static bool CaptureMouse(bool yes) noexcept;
+    static bool setMouseCaptured(bool yes) noexcept;
     static bool IsMouseCaptured() noexcept;
 };
 

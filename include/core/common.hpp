@@ -13,11 +13,27 @@
 NAMESPACE_BEGIN(monako)
 
 
-inline consteval usize cstr_len(const char* cstr) {
+inline consteval usize cstr_len(const char* cstr) noexcept {
     usize n = 0;
     while (*cstr++ != '\0') ++n;
     return n;
 }
+
+template<typename T, usize N>
+inline consteval usize item_size(const T (&array)[N]) noexcept {
+    return sizeof(T);  (void)array;
+}
+// overload for containers with the underlying type that has ::value_type or ::ValueType
+template<typename T> requires (
+    requires { typename T::ValueType; } ||
+    requires { typename T::value_type; }
+) inline
+consteval usize item_size(const T&) noexcept {
+    if constexpr (requires { typename T::ValueType; }) return sizeof(typename T::ValueType);
+    else return sizeof(typename T::value_type);
+}
+
+
 
 // a value with default value storage
 template<typename T>
@@ -76,25 +92,22 @@ public:
 
 
 template<class T>
-struct Ref {
-private:
+class Ref {
     const T* const m_data = nullptr;
-public:
-    Ref (const T& object): m_data(object) {}
 
-    const T& get() const {
-        return m_data;
-    }
+public:
+    Ref(T& data): m_data(&data) {}
+
+    MK_NODISCARD const T& get() const noexcept { return *m_data; }
 };
 
 
-
-template <class T>
-struct RefMut {
-private:
+template<class T>
+class RefMut {
     T* const m_data = nullptr;
+
 public:
-    RefMut (const T& object): m_data(&object) {}
+    RefMut(T& object): m_data(&object) {}
 
     const T& get() const {
         return *m_data;
